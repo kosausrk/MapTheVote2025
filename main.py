@@ -2,6 +2,12 @@
 
 import pandas as pd
 import geopandas as gpd
+import folium
+
+
+
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 from shapely.geometry import Point
@@ -63,7 +69,27 @@ ax.axis('off')
 plt.tight_layout()
 plt.show()
 
+
+# Create a basic Folium map centered over NYC
+m = folium.Map(location=[40.7128, -74.0060], zoom_start=10)
+
+# Add choropleth layer using same normalized weights
+folium.Choropleth(
+    geo_data="nyc_boroughs.geojson",
+    name="Strategic Index",
+    data=boroughs,
+    columns=["borough", "normalized_weight"],
+    key_on="feature.properties.BoroName",
+    fill_color="YlGn",
+    fill_opacity=0.7,
+    line_opacity=0.3,
+    legend_name="Strategic Opportunity Index (0.0 – 1.0)",
+).add_to(m)
+
+
 # --- Save for Web or Integration ---
 # boroughs.to_file("mandani_strategy.geojson", driver="GeoJSON")
 
 
+# Save the interactive map to HTML
+m.save("output/nyc-vote-heatmap.html")
