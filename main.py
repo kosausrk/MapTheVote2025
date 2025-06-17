@@ -1,3 +1,7 @@
+#TO DO 
+#currently working on adding html map, working on fixing folium setup to get map shown on web 
+
+
 # CivicScope NYC: Strategic Voting Landscape Tool for Civic Engagement
 
 import pandas as pd
@@ -93,3 +97,7 @@ folium.Choropleth(
 
 # Save the interactive map to HTML
 m.save("output/nyc-vote-heatmap.html")
+
+
+
+
