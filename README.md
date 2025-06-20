@@ -3,8 +3,10 @@
 A data-driven tool to visualize and identify high-impact voter engagement zones across NYC.  
 Built to support civic action, outreach strategy, and increase turnout in the 2025 mayoral election.
 
-Zohran4NYC: https://www.zohranfornyc.com/ 
+# Zohran4NYC: https://www.zohranfornyc.com/ 
 
+
+![Zohran 4 NYC](zohran-nyc.png)
 # Visualize
 ![NYC Voter Heatmap](images/nyc-vote-heatmap.png)
 
