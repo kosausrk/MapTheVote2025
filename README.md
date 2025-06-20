@@ -3,9 +3,14 @@
 A data-driven tool to visualize and identify high-impact voter engagement zones across NYC.  
 Built to support civic action, outreach strategy, and increase turnout in the 2025 mayoral election.
 
+# Visualize
 ![NYC Voter Heatmap](images/nyc-vote-heatmap.png)
 
+![Strategic Visual 2](images/visual2.png)
+
 ---
+
+
 
 ## I: What It Does
 
