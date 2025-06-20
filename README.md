@@ -7,7 +7,7 @@ Built to support civic action, outreach strategy, and increase turnout in the 20
 
 ---
 
-## I What It Does
+## I: What It Does
 
 - Maps voter demographics like age, education, and unaffiliated status
 - Calculates a **Strategic Engagement Index** by borough (scaled 0.0 to 1.0)
@@ -16,7 +16,7 @@ Built to support civic action, outreach strategy, and increase turnout in the 20
 
 ---
 
-## II What the 0–1.0 Score Means
+## II: What the 0–1.0 Score Means
 
 Each NYC borough is scored from **0 (low potential)** to **1.0 (high strategic potential)** for civic engagement based on:
 - % under age 30
@@ -29,7 +29,7 @@ This creates a composite “engagement opportunity” score.
 
 ---
 
-## III Sources Used
+## III: Sources Used
 
 Real borough-level metrics were sourced from:
 
@@ -43,7 +43,7 @@ Real borough-level metrics were sourced from:
 
 ---
 
-## IV Run It Locally
+## IV: Run It Locally
 
 ```bash
 git clone https://github.com/kosausrk/MapTheVote2025.git
