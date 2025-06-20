@@ -1,5 +1,8 @@
 # MapTheVoteNYC2025: Strategic Voting Landscape Tool
 
+
+(Open Source)  Feel free to message me on Discord k0sa776 for any questions/ to be added to repo 
+
 A data-driven tool to visualize and identify high-impact voter engagement zones across NYC.  
 Built to support civic action, outreach strategy, and increase turnout in the 2025 mayoral election.
 
