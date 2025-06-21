@@ -1,38 +1,51 @@
-// #TO DO 
-// # 🌍 Setup: Initial React + Leaflet map scaffolding
-// #
-// # - Added Leaflet with react-leaflet
-// # - Set up NYCMap.jsx component with basic TileLayer and GeoJSON
-// # - Moved nyc_boroughs.geojson into public/data/
-// # - Confirmed GeoJSON loads in console ✅ but map still not displaying
-// # - FitBounds logic added to auto-center GeoJSON (no visible result yet)
-// # - Skipped marker icon fix for now due to Vite/Leaflet icon issue
-// #
-// # 🔧 Next steps:
-// # - Double check Leaflet container height / layout
-// # - Test static basemap only (TileLayer only, no GeoJSON)
-// # - Optionally migrate to Mapbox or react-map-gl for smoother setup
-// #
-// # Commit preserves current Leaflet debug state before switching approaches.
-
-
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
+import { useEffect, useState } from 'react';
+import Map, { Source, Layer } from 'react-map-gl/maplibre';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 export default function NYCMap() {
-  return (
-    <div className="h-screen w-screen">
-      <MapContainer
-  center={[40.7128, -74.0060]}
-  zoom={11}
-  className="h-full w-full"
->
-  <TileLayer
-    attribution='&copy; OpenStreetMap contributors'
-    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  />
-</MapContainer>
+  const [geoData, setGeoData] = useState(null);
 
-    </div>
+  useEffect(() => {
+    fetch('/data/nyc_boroughs.geojson')
+     // ✅ load from public
+      .then(res => res.json())
+      .then(data => {
+        console.log('✅ Loaded GeoJSON', data);
+        setGeoData(data);
+      })
+      .catch(err => console.error('❌ Failed to load GeoJSON:', err));
+  }, []);
+
+  return (
+    <Map
+      initialViewState={{
+        latitude: 40.73,
+        longitude: -73.93,
+        zoom: 10,
+      }}
+      mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+      style={{ width: '100vw', height: '100vh' }}
+    >
+      {geoData && (
+        <Source id="boroughs" type="geojson" data={geoData}>
+          <Layer
+            id="borough-fill"
+            type="fill"
+            paint={{
+              'fill-color': '#ff0000',
+              'fill-opacity': 0.3,
+            }}
+          />
+          <Layer
+            id="borough-outline"
+            type="line"
+            paint={{
+              'line-color': '#000',
+              'line-width': 2,
+            }}
+          />
+        </Source>
+      )}
+    </Map>
   );
 }
