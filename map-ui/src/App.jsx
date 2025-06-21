@@ -1,8 +1,7 @@
-import NYCMap from "./NYCMap";
-
+import Dashboard from "./components/Dashboard";
 
 function App() {
-  return <NYCMap />;
+  return <Dashboard />;
 }
 
 export default App;
