@@ -1,61 +1,62 @@
-import { MapContainer, TileLayer, GeoJSON, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+// src/components/NYCMap.jsx
 
-// ⚠️ BIG custom marker icon
-const hugeIcon = L.icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  iconSize: [80, 120],        // HUGE marker
-  iconAnchor: [40, 120],      // Anchor so it pins at the tip
-  popupAnchor: [0, -110],     // Position the popup above it
-});
+import Map, { Source, Layer, Marker } from 'react-map-gl/maplibre';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
-const testGeoJSON = {
-  type: "FeatureCollection",
+const polygonData = {
+  type: 'FeatureCollection',
   features: [
     {
-      type: "Feature",
-      properties: { name: "Debug Square" },
+      type: 'Feature',
       geometry: {
-        type: "Polygon",
-        coordinates: [
-          [
-            [-73.90, 40.75],
-            [-73.87, 40.75],
-            [-73.87, 40.73],
-            [-73.90, 40.73],
-            [-73.90, 40.75]
-          ]
-        ]
-      }
-    }
-  ]
+        type: 'Polygon',
+        coordinates: [[
+          [-73.90, 40.75],
+          [-73.87, 40.75],
+          [-73.87, 40.73],
+          [-73.90, 40.73],
+          [-73.90, 40.75],
+        ]],
+      },
+    },
+  ],
 };
 
 export default function NYCMap() {
   return (
-    <div style={{ height: '100vh', width: '100vw' }}>
-      <MapContainer
-        center={[40.74, -73.88]}
-        zoom={13}
-        style={{ height: '100%', width: '100%' }}
-      >
-        <TileLayer
-          attribution='&copy; OpenStreetMap contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    <Map
+      initialViewState={{
+        latitude: 40.74,
+        longitude: -73.885,
+        zoom: 13,
+      }}
+      mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+      style={{ width: '100vw', height: '100vh' }}
+    >
+      {/* Polygon Layer */}
+      <Source id="nyc-poly" type="geojson" data={polygonData}>
+        <Layer
+          id="nyc-fill"
+          type="fill"
+          paint={{
+            'fill-color': 'lime',
+            'fill-opacity': 0.5,
+          }}
         />
-
-        {/* 🟩 Green square in Queens */}
-        <GeoJSON
-          data={testGeoJSON}
-          style={{ color: 'lime', weight: 4, fillOpacity: 0.4 }}
+        <Layer
+          id="nyc-border"
+          type="line"
+          paint={{
+            'line-color': 'black',
+            'line-width': 2,
+          }}
         />
+      </Source>
 
-        {/* 📍 ENORMOUS marker */}
-        <Marker position={[40.74, -73.885]} icon={hugeIcon}>
-          <Popup>💥 This is a GIANT marker</Popup>
-        </Marker>
-      </MapContainer>
-    </div>
+      {/* Huge Marker */}
+      <Marker longitude={-73.885} latitude={40.74}>
+        <div style={{ fontSize: '3rem' }}>📍</div>
+      </Marker>
+    </Map>
   );
 }
