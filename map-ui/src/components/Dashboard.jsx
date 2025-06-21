@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import SimpleMap from './SimpleMap';
-import { boroughData } from '../data/boroughData';
+import { boroughData, calculateStrategicWeight } from '../data/boroughData';
 
 export default function Dashboard() {
   const [selectedBorough, setSelectedBorough] = useState(null);
@@ -79,11 +79,75 @@ export default function Dashboard() {
             Show Neighborhoods
           </label>
         </div>
+
+        {/* Selected Borough Details */}
+        {selectedBorough && (
+          <div style={{ 
+            marginTop: '20px', 
+            padding: '15px', 
+            backgroundColor: '#475569', 
+            borderRadius: '8px' 
+          }}>
+            <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '10px' }}>
+              {selectedBorough}
+            </h3>
+            <div style={{ fontSize: '14px', lineHeight: '1.6' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                <span>Population:</span>
+                <span style={{ fontWeight: 'bold' }}>
+                  {boroughData[selectedBorough].population.toLocaleString()}
+                </span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                <span>Registered Voters:</span>
+                <span style={{ fontWeight: 'bold' }}>
+                  {boroughData[selectedBorough].registered_voters.toLocaleString()}
+                </span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                <span>Turnout Rate:</span>
+                <span style={{ fontWeight: 'bold' }}>
+                  {(boroughData[selectedBorough].turnout_rate * 100).toFixed(1)}%
+                </span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                <span>Strategic Score:</span>
+                <span style={{ fontWeight: 'bold' }}>
+                  {calculateStrategicWeight(selectedBorough)}%
+                </span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                <span>Under 30:</span>
+                <span style={{ fontWeight: 'bold' }}>
+                  {(boroughData[selectedBorough].under30_pct * 100).toFixed(1)}%
+                </span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                <span>College Educated:</span>
+                <span style={{ fontWeight: 'bold' }}>
+                  {(boroughData[selectedBorough].college_edu_pct * 100).toFixed(1)}%
+                </span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span>Avg Income:</span>
+                <span style={{ fontWeight: 'bold' }}>
+                  ${boroughData[selectedBorough].avg_income_k}k
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* RIGHT MAP */}
       <div style={{ flex: 1, height: '100vh' }}>
-        <SimpleMap />
+        <SimpleMap 
+          selectedBorough={selectedBorough}
+          setSelectedBorough={setSelectedBorough}
+          filteredBoroughs={filteredBoroughs}
+          viewMode={viewMode}
+          showNeighborhoods={showNeighborhoods}
+        />
       </div>
     </div>
   );
