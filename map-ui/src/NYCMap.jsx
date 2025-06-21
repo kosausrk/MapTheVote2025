@@ -25,7 +25,7 @@ export default function NYCMap() {
       <MapContainer
   center={[40.7128, -74.0060]}
   zoom={11}
-  className="h-full w-full"
+  className="h-full w-full z-0"
 >
   <TileLayer
     attribution='&copy; OpenStreetMap contributors'
